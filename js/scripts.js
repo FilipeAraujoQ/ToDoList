@@ -1,15 +1,14 @@
     // Seleção de elementos
-const todoForm = document.querySelector("todo-form");
-const todoInput = document.querySelector("todo-input");
-const todoList = document.querySelector("todo-lis");
-const editForm = document.querySelector("edit-form");
-const editInput = document.querySelector("edit-input");
-const cancelEditBtn = document.querySelector("cancel-edit-btn");
-
+const todoForm = document.querySelector("#todo-form");
+const todoInput = document.querySelector("#todo-input");
+const todoList = document.querySelector("#todo-list");
+const editForm = document.querySelector("#edit-form");
+const editInput = document.querySelector("#edit-input");
+const cancelEditBtn = document.querySelector("#cancel-edit-btn");
 
 
     // Funções
-//Salva os elementos do todo
+//adiciona os elementos do todo
 const saveTodo = (text) => {
     const todo = document.createElement("div")
     todo.classList.add("todo") //criando a div
@@ -34,16 +33,30 @@ const saveTodo = (text) => {
     todo.appendChild(deleteBtn)
 
     todoList.appendChild(todo)
+
+    todoInput.value = ""; //ficar vazio quando acaba de digitar
+    todoInput.focus();
+
 }
 
     // Eventos
-//
+//quando submit, ele vai salvar o conteudo
 todoForm.addEventListener("submit", (e) =>  {
     e.preventDefault();
 
     const inputValue = todoInput.value;
 
     if(inputValue){
-        saveTodo(inputValue)
+        saveTodo(inputValue);
     }
 });
+
+//identificar o click
+document.addEventListener("click", (e) => {
+    const targetEl = e.target
+    const parentEl = targetEl.closest("div")
+
+    if(targetEl.classList.contains("finish-todo")) {
+        parentEl.classList.toggle("done")
+    }
+})
